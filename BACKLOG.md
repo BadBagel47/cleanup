@@ -12,27 +12,20 @@ The user's additions during the first run (2026-11-18):
 
 ## Proposed runs
 
-Prioritised for: the user's latest wishes first.
-
-- **A** – strong model, medium level – Emoji kept by default, and a separate group for the rules that are off
-  - F-009 – Switch the emoji rule off by default and stop other rules from turning letter-like emoji (ℹ️ Ⓜ️ 🅰️ 🅿️) into plain letters, so emoji survive a standard wash
-  - D-010 – Move the rules that are off by default into their own group last in the settings, so it is clear at a glance what a standard wash does and what is extra
-  - Approved 2026-11-18 with the recommendation: group "Stronger clean-up (off by default)", Emoji included.
+Nothing open.
 
 ## Open
 
-### F-009 – Keep emoji by default
-Status: Pågår (2026-11-18, branch claude/wizardly-euler-xwoz5h)
-Priority: High
-The user (2026-11-18): "Tillåt emojis som default". The "Emoji" rule becomes off by default; it can still be switched on. Checked on 2026-11-18: with the emoji rule off, every common emoji survives the other default rules (faces, skin tones, families, flags, keycaps, hearts) except four that "Fancy letters" turns into letters: ℹ️ Ⓜ️ 🅰️ 🅿️. Fix: "Fancy letters" leaves a letter alone when it is written as an emoji (followed by the emoji selector). Update the test for the defaults, add tests for emoji surviving a standard wash, record the decision in HANDOFF.md.
-
-### D-010 – Own group for the rules that are off by default
-Status: Pågår (2026-11-18, branch claude/wizardly-euler-xwoz5h)
-Priority: Medium
-The user (2026-11-18): "De som är av ska vara av. Men frågan är om de ska lyftas ut och läggas separat? Så att de som normalt sätt är av får en egen grupp?"
-Proposal: a new group last in the settings holding the rules that are off by default: Everything outside basic ASCII, Accents, Remove all empty lines, Join broken lines, and (after F-009) Emoji. A short line under the group heading says they change real text and are off unless switched on. The other groups then contain only rules that are on by default. "Standard", "All on" and "All off" work as before. Waits for the user's go-ahead and the answer on name and Emoji.
+Nothing open.
 
 ## Done
+
+### F-009 – Keep emoji by default
+Done 2026-11-18. The user (2026-11-18): "Tillåt emojis som default". The "Emoji" rule becomes off by default; it can still be switched on. Checked on 2026-11-18: with the emoji rule off, every common emoji survives the other default rules (faces, skin tones, families, flags, keycaps, hearts) except four that "Fancy letters" turns into letters: ℹ️ Ⓜ️ 🅰️ 🅿️. Fix: "Fancy letters" leaves a letter alone when it is written as an emoji (followed by the emoji selector). Update the test for the defaults, add tests for emoji surviving a standard wash, record the decision in HANDOFF.md. Also: the space between an emoji and the punctuation after it ("great 👍 !") is removed by "Spaces before punctuation".
+
+### D-010 – Own group for the rules that are off by default
+Done 2026-11-18. The user (2026-11-18): "De som är av ska vara av. Men frågan är om de ska lyftas ut och läggas separat? Så att de som normalt sätt är av får en egen grupp?"
+Proposal: a new group last in the settings holding the rules that are off by default: Everything outside basic ASCII, Accents, Remove all empty lines, Join broken lines, and (after F-009) Emoji. A short line under the group heading says they change real text and are off unless switched on. The other groups then contain only rules that are on by default. "Standard", "All on" and "All off" work as before. Approved with the recommendation: named "Stronger clean-up (off by default)", Emoji included. Visitors' stored settings now keep only what they changed themselves, so later changes of a default reach them too; an emoji choice stored by the first version is ignored.
 
 ### D-008 – Should the last four rules also be on by default?
 Decided 2026-11-18 by the user: no, they stay off ("De som är av ska vara av"). The four: Everything outside basic ASCII, Accents, Remove all empty lines, Join broken lines. Follow-up: D-010.

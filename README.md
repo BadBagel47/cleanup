@@ -3,7 +3,7 @@
 A web page that washes messy text into plain text, and shows exactly what it did.
 
 - Paste text, get the cleaned text next to it.
-- A setting for every kind of clean-up (40 rules in seven groups): spaces, lines, invisible characters, letters, typography, markup, symbols.
+- A setting for every kind of clean-up (40 rules): spaces, lines, invisible characters, letters, typography, markup, symbols, plus a last group, "Stronger clean-up", with the rules that change real text and are off by default (emoji, accents, non-ASCII, empty lines, line joining).
 - Before and after, side by side or combined, with line numbers and every difference marked.
 - Select text in any box and the before view marks what gets cleaned in that stretch. Point at a mark to see what kind of character it is (name, code point, type) and which rule flagged it. Characters that cannot normally be seen get a visible stand-in.
 - A log of every change: where, what it was, what it became, which rule.
@@ -41,7 +41,7 @@ Needs only Node (20 or later), no packages. The tests cover the cleaning rules, 
 | `tools/escape-nonascii.py` | Keeps invisible characters in the source as `\uXXXX` escapes |
 | `tests/` | Tests, run with `npm test` |
 
-Adding a rule: add an entry to `RULES` in `js/engine.js` (its position decides when it runs), list its id in a group in `GROUPS`, and add a test. The page picks it up by itself.
+Adding a rule: add an entry to `RULES` in `js/engine.js` (its position decides when it runs), list its id in a group in `GROUPS`, and add a test. A rule that is off by default belongs in the last group, `extra`; a test checks this. The page picks it up by itself.
 
 After editing JavaScript that contains unusual characters, run:
 

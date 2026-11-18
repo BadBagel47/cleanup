@@ -274,6 +274,7 @@ textarea.well:focus-visible { outline: 2px solid var(--accent); outline-offset: 
 .group summary svg { flex: none; transition: transform .2s; color: var(--ink-soft); }
 .group[open] summary svg { transform: rotate(180deg); }
 .group-body { padding: 0 0 8px; }
+.group-note { font-size: 12.5px; color: var(--ink-soft); margin: -2px 4px 8px; }
 .rule { padding: 7px 4px; border-radius: 12px; }
 .rule:hover { background: rgba(var(--tint), .22); }
 html:not(.light) .rule:hover { background: rgba(255, 255, 255, .05); }

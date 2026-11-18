@@ -42,10 +42,27 @@ test('every rule is listed in exactly one group and has a label and description'
   }
 });
 
-test('all rules are on by default except the four that delete real text', () => {
+test('the rules that are off by default are exactly the last group', () => {
   const s = defaultSettings();
   const off = Object.keys(s.rules).filter((id) => !s.rules[id]).sort();
-  assert.deepEqual(off, ['accents', 'asciiOnly', 'joinLines', 'removeBlankLines']);
+  assert.deepEqual(off, ['accents', 'asciiOnly', 'emoji', 'joinLines', 'removeBlankLines']);
+  const last = GROUPS[GROUPS.length - 1];
+  assert.deepEqual([...last.rules].sort(), off);
+  assert.ok(last.note);
+});
+
+test('emoji survive a standard wash', () => {
+  const emoji = ['\u{1F600}', '\u{1F44D}\u{1F3FD}', '\u2764\uFE0F', '\u{1F468}\u200D\u{1F469}\u200D\u{1F467}', '\u{1F1F8}\u{1F1EA}',
+    '\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}', '1\uFE0F\u20E3', '\u2139\uFE0F', '\u24C2\uFE0F', '\u{1F170}\uFE0F',
+    '\u{1F17F}\uFE0F', '\u00A9\uFE0F', '\u203C\uFE0F', '\u{1F469}\u200D\u{1F4BB}', '\u{1FAF1}\u{1F3FB}\u200D\u{1FAF2}\u{1F3FF}',
+    '\u263A\uFE0F', '\u{1F3F3}\uFE0F\u200D\u{1F308}'];
+  for (const e of emoji) {
+    const text = 'a ' + e + ' b';
+    assert.equal(clean(text, defaultSettings()).output, text, JSON.stringify(e));
+  }
+  // switched on, the emoji rule still removes them
+  const s = defaultSettings(); s.rules.emoji = true;
+  assert.equal(clean('a \u{1F600} b \u{1F170}\uFE0F', s).output, 'a b');
 });
 
 test('empty input', () => {
@@ -104,6 +121,7 @@ test('spaces before punctuation', () => {
   assert.equal(f('detta \u00E4r en mening !'), 'detta \u00E4r en mening!');
   assert.equal(f('one , two ; three : four . Five ?'), 'one, two; three: four. Five?');
   assert.equal(f('really ?!'), 'really?!');
+  assert.equal(f('great \u{1F44D}\u{1F3FD} !'), 'great \u{1F44D}\u{1F3FD}!');
   assert.equal(f('"quoted" .'), '"quoted".');
   // left alone: smileys, runs of dots, decimals, names starting with a dot
   assert.equal(f('hi :) ok ;)'), 'hi :) ok ;)');
@@ -147,6 +165,7 @@ test('letters', () => {
   assert.equal(run('\u{1D5EF}\u{1D5FC}\u{1D5F9}\u{1D5F1} \u{1D4EF}\u{1D4EA}\u{1D4F7}\u{1D4EC}\u{1D502} \u24D2\u24D8', 'fancyLetters'), 'bold fancy ci');
   assert.equal(run('s\u1D0D\u1D00\u029F\u029F \u1D04\u1D00\u1D18s', 'fancyLetters'), 'small caps');
   assert.equal(run('/\u026A/ sound', 'fancyLetters'), '/\u026A/ sound'); // lone phonetic symbol kept
+  assert.equal(run('\u2139 \u24C2 \u{1F170} \u2139\uFE0F \u24C2\uFE0F \u{1F170}\uFE0F', 'fancyLetters'), 'i M A \u2139\uFE0F \u24C2\uFE0F \u{1F170}\uFE0F');
   assert.equal(run('a\u0308 e\u0301', 'normalize'), '\u00E4 \u00E9');
   const k = only('normalize'); k.options.normalizeForm = 'NFKC';
   assert.equal(clean('x\u00B2 \u2122', k).output, 'x2 TM');

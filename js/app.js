@@ -34,6 +34,9 @@ function readStore() {
 function loadSettings() {
   const s = defaultSettings();
   const stored = readStore();
+  // The first version stored every rule. Emoji were removed by default then,
+  // so that old stored value is not treated as the visitor's own choice.
+  if (stored.v !== 2 && stored.rules?.emoji === true) delete stored.rules.emoji;
   for (const r of RULES) {
     if (typeof stored.rules?.[r.id] === 'boolean') s.rules[r.id] = stored.rules[r.id];
     if (r.option) {
@@ -50,7 +53,12 @@ if (ui.view !== 'side' && ui.view !== 'unified') ui.view = narrow() ? 'unified' 
 
 function save() {
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify({ rules: settings.rules, options: settings.options, ui }));
+    // Only choices that differ from the defaults are stored, so a later change
+    // of a default reaches everyone who never touched that rule.
+    const defaults = defaultSettings();
+    const rules = {};
+    for (const r of RULES) if (settings.rules[r.id] !== defaults.rules[r.id]) rules[r.id] = settings.rules[r.id];
+    localStorage.setItem(STORE_KEY, JSON.stringify({ v: 2, rules, options: settings.options, ui }));
   } catch { /* storage unavailable: the page works without it */ }
 }
 
@@ -92,6 +100,7 @@ function buildSettings() {
     summary.insertAdjacentHTML('beforeend', CHEVRON);
     details.append(summary);
     const body = el('div', 'group-body');
+    if (group.note) body.append(el('p', 'group-note', group.note));
     for (const id of group.rules) body.append(ruleRow(ruleById(id)));
     details.append(body);
     host.append(details);

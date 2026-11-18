@@ -14,11 +14,11 @@ A web page that cleans text from messy input into plain text ("tvätta text"). R
 - 2026-11-18: First version built and on `main` (F-001 to F-005, F-007): 40 cleaning rules with a setting each, before/after view with line numbers, change log, selection marks with character details, glass theme, remembered settings.
 - 2026-11-18: Verified with the tests (`npm test`) and in Chromium on desktop size, phone size (iPhone 13 emulation, touch) and with keyboard only. Not tried on a real phone, and not in Safari or Firefox.
 - 2026-11-18: Published on GitHub Pages: https://badbagel47.github.io/cleanup/ (F-006), checked in Chromium at desktop and phone size.
-- 2026-11-18: The user asked for emoji to be kept by default (F-009, waits for go-ahead).
+- 2026-11-18: Emoji are kept by default (F-009), and the five rules that are off by default have their own group last in the settings (D-010). Published and checked.
 
 ## Next steps
 
-1. F-009 (keep emoji by default) and D-010 (own group for the rules that are off by default) once the user says go; D-010 has an open question on the group name.
+Nothing open in the backlog.
 
 ## Publishing
 

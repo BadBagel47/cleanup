@@ -203,14 +203,15 @@ const SMALL_CAPS = {
 };
 const SC = Object.keys(SMALL_CAPS).join('');
 const fancyLetters = [
+  // A letter written as an emoji (followed by the emoji selector, as in ℹ️ Ⓜ️ 🅰️ 🅿️) is left alone.
   // Mathematical alphabets (bold, italic, script, fraktur, double-struck, monospace …).
   rx(/[\u{1D400}-\u{1D7FF}]/gu, (m) => m[0].normalize('NFKC')),
   // The same styles for the few letters that live among the letter-like symbols.
-  rx(/[\u2102\u210A-\u2113\u2115\u2119-\u211D\u2124\u2128\u212C\u212D\u212F-\u2131\u2133\u2134\u2139\u2145-\u2149]/g, (m) => m[0].normalize('NFKC')),
+  rx(/[\u2102\u210A-\u2113\u2115\u2119-\u211D\u2124\u2128\u212C\u212D\u212F-\u2131\u2133\u2134\u2139\u2145-\u2149](?!\uFE0F)/g, (m) => m[0].normalize('NFKC')),
   // Circled letters.
-  rx(/[\u24B6-\u24E9]/g, (m) => m[0].normalize('NFKC')),
-  // Squared and negative circled/squared capitals (optionally with an emoji selector).
-  rx(/([\u{1F130}-\u{1F149}\u{1F150}-\u{1F169}\u{1F170}-\u{1F189}])\uFE0F?/gu, (m) => {
+  rx(/[\u24B6-\u24E9](?!\uFE0F)/g, (m) => m[0].normalize('NFKC')),
+  // Squared and negative circled/squared capitals.
+  rx(/([\u{1F130}-\u{1F149}\u{1F150}-\u{1F169}\u{1F170}-\u{1F189}])(?!\uFE0F)/gu, (m) => {
     const cp = m[1].codePointAt(0);
     const base = cp >= 0x1f170 ? 0x1f170 : cp >= 0x1f150 ? 0x1f150 : 0x1f130;
     return String.fromCharCode(65 + cp - base);
@@ -350,7 +351,7 @@ const unusualSpaces = rx(/[\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000\u3164\uFF
 // A space between a word and the punctuation that ends it: "a sentence !".
 // Smileys such as :) and runs of dots are left alone.
 const spaceBeforePunct = rx(
-  /(?<=[\p{L}\p{N}"')\]\u00BB\u201D\u2019%])[ \t]+(?=(?:[!?]+|[,.](?![.,])|[;:])(?:\s|$|["'\u00BB\u201D\u2019]|(?<![;:])[)\]]))/gu,
+  /(?<=[\p{L}\p{N}"')\]\u00BB\u201D\u2019%\p{Extended_Pictographic}\p{Emoji_Modifier}\uFE0F\u20E3])[ \t]+(?=(?:[!?]+|[,.](?![.,])|[;:])(?:\s|$|["'\u00BB\u201D\u2019]|(?<![;:])[)\]]))/gu,
   '',
 );
 
@@ -414,8 +415,8 @@ export const RULES = [
   { id: 'lineEndings', group: 'lines', on: true, label: 'Unusual line breaks',
     desc: 'Makes every line break a normal one: carriage returns, Unicode line and paragraph separators, form feeds and vertical tabs.',
     passes: [lineEndings] },
-  { id: 'emoji', group: 'symbols', on: true, label: 'Emoji',
-    desc: 'Removes emoji, including flags, skin tones and combined emoji.',
+  { id: 'emoji', group: 'extra', on: false, label: 'Emoji',
+    desc: 'Removes emoji, including flags, skin tones and combined emoji. Off by default, so emoji are kept.',
     passes: [emoji] },
   { id: 'bullets', group: 'typography', on: true, label: 'Bullet symbols',
     desc: 'Turns bullet symbols at the start of a line (•, ▪, ●, ➤ …) into a plain hyphen.',
@@ -451,7 +452,7 @@ export const RULES = [
   { id: 'ellipsis', group: 'typography', on: true, label: 'Ellipsis character',
     desc: 'Turns the single ellipsis character (…) into three dots.',
     passes: [ellipsis] },
-  { id: 'accents', group: 'letters', on: false, label: 'Accents',
+  { id: 'accents', group: 'extra', on: false, label: 'Accents',
     desc: 'Removes accents from Latin letters: é becomes e, ñ becomes n. Also changes å, ä and ö.',
     passes: accents },
   { id: 'zeroWidth', group: 'invisible', on: true, label: 'Zero-width characters',
@@ -484,7 +485,7 @@ export const RULES = [
   { id: 'unusualSpaces', group: 'spaces', on: true, label: 'Unusual spaces',
     desc: 'Turns non-breaking spaces, thin spaces, wide spaces and blank filler characters into a normal space.',
     passes: [unusualSpaces] },
-  { id: 'asciiOnly', group: 'symbols', on: false, label: 'Everything outside basic ASCII',
+  { id: 'asciiOnly', group: 'extra', on: false, label: 'Everything outside basic ASCII',
     desc: 'Removes every character that is left and is not a basic English letter, digit or keyboard symbol. This also removes å, ä, ö and other non-English letters.',
     passes: [asciiOnly] },
   { id: 'tabs', group: 'spaces', on: true, label: 'Tabs to spaces',
@@ -503,13 +504,13 @@ export const RULES = [
   { id: 'leadingSpaces', group: 'spaces', on: true, label: 'Spaces at line starts',
     desc: 'Removes indentation at the start of every line.',
     passes: [leadingSpaces] },
-  { id: 'removeBlankLines', group: 'lines', on: false, label: 'Remove all empty lines',
+  { id: 'removeBlankLines', group: 'extra', on: false, label: 'Remove all empty lines',
     desc: 'Removes every empty line.',
     passes: [removeBlankLines] },
   { id: 'collapseBlankLines', group: 'lines', on: true, label: 'Repeated empty lines',
     desc: 'Keeps one empty line where there are several in a row.',
     passes: [collapseBlankLines] },
-  { id: 'joinLines', group: 'lines', on: false, label: 'Join broken lines',
+  { id: 'joinLines', group: 'extra', on: false, label: 'Join broken lines',
     desc: 'Joins lines that were broken in the middle of a paragraph. Empty lines between paragraphs and list items are kept.',
     passes: [joinLines] },
   { id: 'collapseSpaces', group: 'spaces', on: true, label: 'Repeated spaces',
@@ -525,17 +526,20 @@ export const GROUPS = [
   { id: 'spaces', label: 'Spaces and tabs',
     rules: ['collapseSpaces', 'trailingSpaces', 'leadingSpaces', 'spaceBeforePunct', 'spaceInsideBrackets', 'unusualSpaces', 'tabs'] },
   { id: 'lines', label: 'Lines',
-    rules: ['lineEndings', 'collapseBlankLines', 'trimEdges', 'removeBlankLines', 'joinLines'] },
+    rules: ['lineEndings', 'collapseBlankLines', 'trimEdges'] },
   { id: 'invisible', label: 'Invisible characters',
     rules: ['zeroWidth', 'softHyphen', 'bidi', 'tagChars', 'variationSelectors', 'otherInvisible', 'controlChars', 'ansi'] },
   { id: 'letters', label: 'Letters',
-    rules: ['normalize', 'ligatures', 'fullwidth', 'fancyLetters', 'combiningDecor', 'homoglyphs', 'accents'] },
+    rules: ['normalize', 'ligatures', 'fullwidth', 'fancyLetters', 'combiningDecor', 'homoglyphs'] },
   { id: 'typography', label: 'Typography',
     rules: ['quotes', 'hyphens', 'dashes', 'ellipsis', 'bullets'] },
   { id: 'markup', label: 'Markup and links',
     rules: ['htmlTags', 'htmlEntities', 'markdown', 'urlTracking'] },
   { id: 'symbols', label: 'Symbols and leftovers',
-    rules: ['emoji', 'replacementChar', 'privateUse', 'asciiOnly'] },
+    rules: ['replacementChar', 'privateUse'] },
+  { id: 'extra', label: 'Stronger clean-up (off by default)',
+    note: 'These change real text: they remove emoji, letters such as \u00E5, \u00E4 and \u00F6, or the breaks between paragraphs. Switch one on when you need it.',
+    rules: ['emoji', 'accents', 'asciiOnly', 'removeBlankLines', 'joinLines'] },
 ];
 
 const RULE_INDEX = new Map(RULES.map((r, i) => [r.id, i]));

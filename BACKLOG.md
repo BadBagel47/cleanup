@@ -12,12 +12,12 @@ The user's additions during the first run (2026-11-18):
 
 ## Proposed runs
 
-Prioritised for: the user's latest wish first.
+Prioritised for: the user's latest wishes first.
 
-- **A** – strong model, medium level – Keep emoji by default
+- **A** – strong model, medium level – Emoji kept by default, and a separate group for the rules that are off
   - F-009 – Switch the emoji rule off by default and stop other rules from turning letter-like emoji (ℹ️ Ⓜ️ 🅰️ 🅿️) into plain letters, so emoji survive a standard wash
-- **B** – strong model, medium level – Default for the last four rules – waits for the user's answer
-  - D-008 – Decide whether the four rules left off should also be on by default
+  - D-010 – Move the rules that are off by default into their own group last in the settings, so it is clear at a glance what a standard wash does and what is extra
+  - Question (D-010): Name of the group, and should "Emoji" be in it? Recommendation: "Stronger clean-up (off by default)", with all five rules that are off by default including Emoji, so that the rule "everything above this is on, this group is off" holds without exceptions.
 
 ## Open
 
@@ -25,16 +25,15 @@ Prioritised for: the user's latest wish first.
 Priority: High
 The user (2026-11-18): "Tillåt emojis som default". The "Emoji" rule becomes off by default; it can still be switched on. Checked on 2026-11-18: with the emoji rule off, every common emoji survives the other default rules (faces, skin tones, families, flags, keycaps, hearts) except four that "Fancy letters" turns into letters: ℹ️ Ⓜ️ 🅰️ 🅿️. Fix: "Fancy letters" leaves a letter alone when it is written as an emoji (followed by the emoji selector). Update the test for the defaults, add tests for emoji surviving a standard wash, record the decision in HANDOFF.md.
 
-### D-008 – Should the last four rules also be on by default?
+### D-010 – Own group for the rules that are off by default
 Priority: Medium
-The user asked for every rule to be on by default. Four were left off because, switched on for every text, they delete real letters or the paragraph structure:
-- Everything outside basic ASCII: removes å, ä, ö and every other non-English letter.
-- Accents: turns å, ä, ö into a, a, o.
-- Remove all empty lines: paragraphs lose the empty line between them.
-- Join broken lines: every paragraph becomes one long line.
-They are one click away in the settings ("All on", or each switch). Question for the user: keep them off by default (recommended), or switch them on too?
+The user (2026-11-18): "De som är av ska vara av. Men frågan är om de ska lyftas ut och läggas separat? Så att de som normalt sätt är av får en egen grupp?"
+Proposal: a new group last in the settings holding the rules that are off by default: Everything outside basic ASCII, Accents, Remove all empty lines, Join broken lines, and (after F-009) Emoji. A short line under the group heading says they change real text and are off unless switched on. The other groups then contain only rules that are on by default. "Standard", "All on" and "All off" work as before. Waits for the user's go-ahead and the answer on name and Emoji.
 
 ## Done
+
+### D-008 – Should the last four rules also be on by default?
+Decided 2026-11-18 by the user: no, they stay off ("De som är av ska vara av"). The four: Everything outside basic ASCII, Accents, Remove all empty lines, Join broken lines. Follow-up: D-010.
 
 ### F-006 – Publishing
 Done 2026-11-18. GitHub Pages from `main` is on; https://badbagel47.github.io/cleanup/ shows the page, checked in Chromium at desktop and phone size (fonts load, no errors, sample, marks and tooltips work).

@@ -18,8 +18,7 @@ A web page that cleans text from messy input into plain text ("tvätta text"). R
 
 ## Next steps
 
-1. F-009 (keep emoji by default) once the user says go.
-2. D-008 waits for the user's answer.
+1. F-009 (keep emoji by default) and D-010 (own group for the rules that are off by default) once the user says go; D-010 has an open question on the group name.
 
 ## Publishing
 
@@ -45,7 +44,8 @@ The user asked for "temat med glas". It is the look of the user's own page "Glas
 - 2026-11-18: Publishing is GitHub Pages straight from `main`.
 - 2026-11-18: Product text in English (the rules' default; the user was told and did not choose Swedish).
 - 2026-11-18: Fonts are served from the repo, not from Google Fonts. The background scenes from the example page are not used (unknown licence).
-- 2026-11-18: All cleaning rules are on by default (the user: "Aktivera alla rensningsval som standard"). Four are still off, waiting for the user's answer in D-008, because they delete real letters or the paragraph structure: everything outside basic ASCII, accents, remove all empty lines, join broken lines.
+- 2026-11-18: All cleaning rules are on by default (the user: "Aktivera alla rensningsval som standard"), except four that delete real letters or the paragraph structure: everything outside basic ASCII, accents, remove all empty lines, join broken lines. The user confirmed these stay off (D-008).
+- 2026-11-18: Emoji are kept by default (the user: "Tillåt emojis som default"); the Emoji rule becomes off by default with F-009.
 - 2026-11-18: The user asked for settings for double spaces, spaces between the last character and the line break, and spaces before punctuation ("detta är en mening !"). All three are separate rules.
 
 ## One-time actions

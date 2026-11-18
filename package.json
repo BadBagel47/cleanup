@@ -1,0 +1,9 @@
+{
+  "name": "cleanup",
+  "private": true,
+  "type": "module",
+  "description": "A web page that washes messy text into plain text. No build step; the tests need only Node.",
+  "scripts": {
+    "test": "node --test"
+  }
+}

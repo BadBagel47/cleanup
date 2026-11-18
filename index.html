@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cleanup – wash messy text into plain text</title>
+<meta name="description" content="Paste messy text and get clean plain text. See exactly what was cleaned, where, and by which rule. Everything happens in your browser.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23ff9f1c'/%3E%3Cpath d='M16 2a14 14 0 0 1 0 28z' fill='%232ec4b6'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<script>
+  // Apply the remembered theme before the first paint.
+  try {
+    var saved = JSON.parse(localStorage.getItem('cleanup:settings:v1') || '{}').ui || {};
+    var light = saved.theme ? saved.theme === 'light' : matchMedia('(prefers-color-scheme: light)').matches;
+    if (light) document.documentElement.classList.add('light');
+    if (saved.motion === false) document.documentElement.classList.add('paused');
+  } catch (e) {}
+</script>
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+<div class="bg" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  <div class="stripes"></div>
+</div>
+
+<a class="skip-link" href="#input">Skip to the text box</a>
+
+<div class="wrap">
+  <nav class="glass topbar" aria-label="Page">
+    <span class="logo">
+      <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="3"/><path d="M16 3a13 13 0 0 1 0 26z" fill="currentColor"/></svg>
+      Cleanup
+    </span>
+    <div class="links">
+      <a href="#text">Text</a>
+      <a href="#settings">Settings</a>
+      <a href="#compare">Before / after</a>
+      <a href="#log">Log</a>
+    </div>
+    <div class="top-actions">
+      <button type="button" class="gbtn icon" id="motionBtn" aria-pressed="false" aria-label="Pause background motion" title="Pause background motion">
+        <svg class="i-pause" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5v14M16 5v14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <svg class="i-play" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+      </button>
+      <button type="button" class="gbtn icon" id="themeBtn" aria-label="Switch to light theme" title="Switch theme">
+        <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>Wash your text</h1>
+    <p>Paste messy text and get plain text back. Choose what gets cleaned, compare before and after, and see every single change with the rule behind it.</p>
+  </header>
+
+  <noscript><p class="glass card notice">This page needs JavaScript to clean text. Nothing is sent anywhere; the cleaning happens in your browser.</p></noscript>
+
+  <div class="layout">
+    <section id="text" class="boxes" aria-label="Text">
+      <div class="glass card box">
+        <div class="card-head">
+          <h2 id="inputLabel">Messy text</h2>
+          <div class="actions">
+            <button type="button" class="gbtn small" id="pasteBtn">Paste</button>
+            <button type="button" class="gbtn small" id="sampleBtn">Try a sample</button>
+            <button type="button" class="gbtn small" id="clearBtn">Clear</button>
+          </div>
+        </div>
+        <textarea id="input" class="well" aria-labelledby="inputLabel" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Paste or type your text here"></textarea>
+        <div class="counters" id="inputCount" aria-live="off">0 lines · 0 characters</div>
+      </div>
+      <div class="glass card box">
+        <div class="card-head">
+          <h2 id="outputLabel">Clean text</h2>
+          <div class="actions">
+            <button type="button" class="gbtn small primary" id="copyBtn">Copy</button>
+            <button type="button" class="gbtn small" id="downloadBtn">Download</button>
+          </div>
+        </div>
+        <textarea id="output" class="well" aria-labelledby="outputLabel" readonly spellcheck="false" placeholder="The cleaned text shows up here"></textarea>
+        <div class="counters" id="outputCount" aria-live="polite">0 lines · 0 characters</div>
+      </div>
+    </section>
+
+    <aside id="settings" class="glass card settings" aria-labelledby="settingsLabel">
+      <div class="card-head">
+        <h2 id="settingsLabel">Settings</h2>
+        <span class="soft" id="rulesOn"></span>
+      </div>
+      <div class="presets" role="group" aria-label="Quick choices">
+        <button type="button" class="gbtn small" id="presetDefault">Standard</button>
+        <button type="button" class="gbtn small" id="presetAll">All on</button>
+        <button type="button" class="gbtn small" id="presetNone">All off</button>
+      </div>
+      <div id="rules"></div>
+      <p class="note">Your choices are remembered in this browser only. Your text is never saved or sent anywhere.</p>
+      <button type="button" class="gbtn small" id="forgetBtn">Forget my settings</button>
+    </aside>
+
+    <section id="compare" class="glass card" aria-labelledby="compareLabel">
+      <div class="card-head">
+        <h2 id="compareLabel">Before / after</h2>
+        <span class="soft" id="summary" aria-live="polite"></span>
+        <div class="actions">
+          <div class="seg" role="group" aria-label="Layout">
+            <button type="button" id="viewSide" aria-pressed="true">Side by side</button>
+            <button type="button" id="viewUnified" aria-pressed="false">Combined</button>
+          </div>
+          <label class="check"><input type="checkbox" class="sw" id="onlyChanged"><span>Changed lines only</span></label>
+        </div>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span><span class="m del">removed</span> cleaned away from the original</span>
+        <span><span class="m ins">added</span> what it became</span>
+        <span><span class="m del"><span class="chip inv" data-l="ZWSP"></span></span> a character you normally cannot see</span>
+      </div>
+      <div class="inspector" id="inspector">
+        <span id="inspectorText">Select some text in any of the boxes to mark what gets cleaned there. Point at a mark to see what it is.</span>
+        <button type="button" class="gbtn small" id="clearFocus" hidden>Clear selection</button>
+      </div>
+      <div class="diff well" id="diff" tabindex="0" role="region" aria-label="Before and after, line by line"></div>
+    </section>
+
+    <section id="log" class="glass card" aria-labelledby="logLabel">
+      <div class="card-head">
+        <h2 id="logLabel">Change log</h2>
+        <span class="soft" id="logSummary"></span>
+        <div class="actions">
+          <button type="button" class="gbtn small" id="copyLogBtn">Copy log</button>
+          <button type="button" class="gbtn small" id="downloadLogBtn">Download log</button>
+        </div>
+      </div>
+      <div class="filters" id="logFilters" role="group" aria-label="Show changes from"></div>
+      <div class="loglist well" id="logList"></div>
+    </section>
+  </div>
+
+  <footer class="foot">
+    <p>Everything happens in your browser. Nothing you paste leaves this device.</p>
+    <p>Fonts: Bricolage Grotesque and JetBrains Mono, SIL Open Font License. Character names from the Unicode Character Database. <a href="https://github.com/BadBagel47/cleanup">Source</a></p>
+  </footer>
+</div>
+
+<div class="glass tip" id="tip" role="tooltip" hidden></div>
+<div class="glass toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

@@ -45,6 +45,7 @@ The user asked for "temat med glas". It is the look of the user's own page "Glas
 - 2026-11-18: Product text in English (the rules' default; the user was told and did not choose Swedish).
 - 2026-11-18: Fonts are served from the repo, not from Google Fonts. The background scenes from the example page are not used (unknown licence).
 - 2026-11-18: All cleaning rules are on by default (the user: "Aktivera alla rensningsval som standard"), except four that delete real letters or the paragraph structure: everything outside basic ASCII, accents, remove all empty lines, join broken lines. The user confirmed these stay off (D-008).
+- 2026-11-18: The rules that are off by default get their own group last in the settings, "Stronger clean-up (off by default)", Emoji included (D-010, approved with the recommendation).
 - 2026-11-18: Emoji are kept by default (the user: "Tillåt emojis som default"); the Emoji rule becomes off by default with F-009.
 - 2026-11-18: The user asked for settings for double spaces, spaces between the last character and the line break, and spaces before punctuation ("detta är en mening !"). All three are separate rules.
 

@@ -13,20 +13,21 @@ A web page that cleans text from messy input into plain text ("tvätta text"). R
 - 2026-11-18: Repo created empty; project files added.
 - 2026-11-18: First version built and on `main` (F-001 to F-005, F-007): 40 cleaning rules with a setting each, before/after view with line numbers, change log, selection marks with character details, glass theme, remembered settings.
 - 2026-11-18: Verified with the tests (`npm test`) and in Chromium on desktop size, phone size (iPhone 13 emulation, touch) and with keyboard only. Not tried on a real phone, and not in Safari or Firefox.
-- 2026-11-18: Not published yet. F-006 waits for the user to turn on GitHub Pages once (see One-time actions).
+- 2026-11-18: Published on GitHub Pages: https://badbagel47.github.io/cleanup/ (F-006), checked in Chromium at desktop and phone size.
+- 2026-11-18: The user asked for emoji to be kept by default (F-009, waits for go-ahead).
 
 ## Next steps
 
-1. When the user has turned on GitHub Pages: check that https://badbagel47.github.io/cleanup/ shows the page, then move F-006 to Done.
-2. Ask-backs from the first run are in BACKLOG.md (D-008).
+1. F-009 (keep emoji by default) once the user says go.
+2. D-008 waits for the user's answer.
 
 ## Publishing
 
-GitHub Pages straight from `main` (root folder), no build step; `.nojekyll` is in place. The repo is public, so Pages is free. Address once turned on: https://badbagel47.github.io/cleanup/ (answered 404 on 2026-11-18, i.e. Pages not yet turned on).
+GitHub Pages straight from `main` (root folder), no build step; `.nojekyll` is in place. The repo is public, so Pages is free. Live address: https://badbagel47.github.io/cleanup/ (turned on by the user 2026-11-18). Every push to `main` is published within a minute or two.
 
 The agent can push straight to `main` here, so the auto-merge workflow is not needed.
 
-Until Pages is on, the user has a private preview: a Claude artifact called "Cleanup – preview" (visible to the owner only). It is a copy from 2026-11-18, is not updated automatically, and its download buttons and Paste button do not work in that viewer. It can be removed once the real page is live.
+There is also an old private preview, a Claude artifact called "Cleanup – preview" (owner only), made before Pages was on. It is not updated; the user can delete it whenever they like.
 
 ## Design reference: the glass theme
 
@@ -49,7 +50,7 @@ The user asked for "temat med glas". It is the look of the user's own page "Glas
 
 ## One-time actions
 
-- Pending: turn on GitHub Pages for the repo: https://github.com/BadBagel47/cleanup/settings/pages → Source "Deploy from a branch" → Branch `main`, folder `/ (root)` → Save. Needed once; after that every push to `main` is published automatically.
+- Done 2026-11-18: GitHub Pages turned on (Deploy from a branch, `main`, root).
 
 ## Environment notes
 

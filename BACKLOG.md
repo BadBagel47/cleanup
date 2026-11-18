@@ -12,14 +12,18 @@ The user's additions during the first run (2026-11-18):
 
 ## Proposed runs
 
-Nothing ready to run. F-006 waits for the user's one-time action, D-008 for the user's answer.
+Prioritised for: the user's latest wish first.
+
+- **A** – strong model, medium level – Keep emoji by default
+  - F-009 – Switch the emoji rule off by default and stop other rules from turning letter-like emoji (ℹ️ Ⓜ️ 🅰️ 🅿️) into plain letters, so emoji survive a standard wash
+- **B** – strong model, medium level – Default for the last four rules – waits for the user's answer
+  - D-008 – Decide whether the four rules left off should also be on by default
 
 ## Open
 
-### F-006 – Publishing
+### F-009 – Keep emoji by default
 Priority: High
-Status: waiting for the user (2026-11-18)
-GitHub Pages straight from `main`, no build step. Everything is in place in the repo. The user has to turn on Pages once (HANDOFF.md, One-time actions). Then: check that https://badbagel47.github.io/cleanup/ shows the page and move this to Done.
+The user (2026-11-18): "Tillåt emojis som default". The "Emoji" rule becomes off by default; it can still be switched on. Checked on 2026-11-18: with the emoji rule off, every common emoji survives the other default rules (faces, skin tones, families, flags, keycaps, hearts) except four that "Fancy letters" turns into letters: ℹ️ Ⓜ️ 🅰️ 🅿️. Fix: "Fancy letters" leaves a letter alone when it is written as an emoji (followed by the emoji selector). Update the test for the defaults, add tests for emoji surviving a standard wash, record the decision in HANDOFF.md.
 
 ### D-008 – Should the last four rules also be on by default?
 Priority: Medium
@@ -31,6 +35,9 @@ The user asked for every rule to be on by default. Four were left off because, s
 They are one click away in the settings ("All on", or each switch). Question for the user: keep them off by default (recommended), or switch them on too?
 
 ## Done
+
+### F-006 – Publishing
+Done 2026-11-18. GitHub Pages from `main` is on; https://badbagel47.github.io/cleanup/ shows the page, checked in Chromium at desktop and phone size (fonts load, no errors, sample, marks and tooltips work).
 
 ### F-001 – Page in the glass theme
 Done 2026-11-18. Single page, no build step, look taken from the user's page "Glaseffekt – exempel": drifting colour blobs behind frosted glass panels, pill top bar, Bricolage Grotesque and JetBrains Mono served from the repo. Light and dark variant (follows the device, can be switched), button to pause the background motion, motion off for visitors who asked their device for reduced motion. Web basics from WEB.md are in from the start. Works on a phone-sized screen and with keyboard only.

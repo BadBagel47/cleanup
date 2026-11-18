@@ -24,10 +24,12 @@ Prioritised for: a complete, usable first version in one go.
 ## Open
 
 ### F-001 – Page in the glass theme
+Status: Pågår (2026-11-18, branch claude/wizardly-euler-xwoz5h)
 Priority: High
 Single page, no build step. Look taken from the user's page "Glaseffekt – exempel" (details in HANDOFF.md): drifting colour blobs behind frosted glass panels, pill top bar, Bricolage Grotesque and JetBrains Mono served from the repo. Light and dark variant. Motion pauses for visitors who have asked their device for reduced motion. Web basics from WEB.md included from the start (no blue tap highlight, focus ring only for keyboard users, pressed state on buttons, own arrow in dropdowns). Works on a phone-sized screen and with keyboard only.
 
 ### F-002 – Cleaning rules with a setting for each
+Status: Pågår (2026-11-18, branch claude/wizardly-euler-xwoz5h)
 Priority: High
 Every kind of clean-up is its own rule that can be switched on or off, grouped so the list is easy to scan, with "all on / all off / reset" and a short explanation per rule. Planned rules:
 - Invisible characters: zero-width characters, byte order mark, soft hyphens, direction marks (left-to-right/right-to-left controls), invisible "tag" characters, variation selectors, other invisible format characters.
@@ -42,22 +44,27 @@ Every kind of clean-up is its own rule that can be switched on or off, grouped s
 Safe rules on by default; rules that change the meaning or look of real text off by default.
 
 ### F-003 – Before/after comparison with line numbers
+Status: Pågår (2026-11-18, branch claude/wizardly-euler-xwoz5h)
 Priority: High
 Before and after side by side (stacked on a phone), both with line numbers, scrolling together. Removed parts marked in the before view and added/replaced parts marked in the after view, with invisible characters drawn as visible symbols. Lines that changed are marked in the margin. A switch between side-by-side and one combined view. Counters for lines, characters and number of changes.
 
 ### F-004 – Change log
+Status: Pågår (2026-11-18, branch claude/wizardly-euler-xwoz5h)
 Priority: High
 A list of every change: line and position, what was there (shown visibly even if it is an invisible character), what it became, and which rule did it. Grouped totals per rule, filter by rule, click an entry to jump to the place in the before view. Can be copied or downloaded.
 
 ### F-005 – Selection marks and character details
+Status: Pågår (2026-11-18, branch claude/wizardly-euler-xwoz5h)
 Priority: High
 Selecting a stretch of text in either box marks, in the before view, every place within that stretch where something is cleaned away. Invisible characters get a visible placeholder there. Pointing at a mark (or tapping it on a phone, or reaching it with the keyboard) shows what kind of character it is (name and code), and which rule flagged it.
 
 ### F-006 – Publishing
+Status: Pågår (2026-11-18, branch claude/wizardly-euler-xwoz5h)
 Priority: High
 GitHub Pages straight from `main`, no build step. Needs the user to turn on Pages once (see HANDOFF.md, one-time actions). After that every change is published automatically.
 
 ### F-007 – Remember settings between visits
+Status: Pågår (2026-11-18, branch claude/wizardly-euler-xwoz5h)
 Priority: Medium
 Store which rules are on in the visitor's own browser, so the choices are still there next time. Only the settings, never the text. Reset button and a short note on the page.
 Legal note: storing something on a visitor's device falls under the Swedish Electronic Communications Act (ch. 9 s. 28). Storage needed for a function the visitor has asked for is normally allowed without a consent banner, and remembered settings are usually seen as such, but that is not a legal guarantee; PTS is the authority to check with. Alternative: do not remember anything, the settings start from the defaults on every visit.

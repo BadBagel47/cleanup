@@ -11,7 +11,7 @@ A web page that cleans text from messy input into plain text ("tvätta text"). R
 ## Current state
 
 - 2026-11-18: Repo created empty. Project files (AGENTS.md, HANDOFF.md, BACKLOG.md) added. No product code yet.
-- The whole first version is described in BACKLOG.md (F-001 to F-007) and waits for the user's go-ahead.
+- 2026-11-18: The user approved the whole first version (F-001 to F-007) with the recommendations. Build in progress.
 
 ## Next steps
 
@@ -34,7 +34,10 @@ The user asked for "temat med glas". It is the look of the user's own page "Glas
 
 ## Decisions
 
-None yet.
+- 2026-11-18: The page remembers the settings in the visitor's own browser (settings only, never the text), with a reset button and a short note on the page. The user approved this after the legal note in F-007.
+- 2026-11-18: Publishing is GitHub Pages straight from `main`.
+- 2026-11-18: Product text in English (the rules' default; the user was told and did not choose Swedish).
+- 2026-11-18: Fonts are served from the repo, not from Google Fonts. The background scenes from the example page are not used (unknown licence).
 
 ## One-time actions
 

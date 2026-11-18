@@ -26,6 +26,8 @@ GitHub Pages straight from `main` (root folder), no build step; `.nojekyll` is i
 
 The agent can push straight to `main` here, so the auto-merge workflow is not needed.
 
+Until Pages is on, the user has a private preview: a Claude artifact called "Cleanup – preview" (visible to the owner only). It is a copy from 2026-11-18, is not updated automatically, and its download buttons and Paste button do not work in that viewer. It can be removed once the real page is live.
+
 ## Design reference: the glass theme
 
 The user asked for "temat med glas". It is the look of the user's own page "Glaseffekt – exempel" (a private Claude artifact, so other agents may not be able to open it). What it consists of:

@@ -56,7 +56,7 @@ The user asked for "temat med glas". It is the look of the user's own page "Glas
 ## Environment notes
 
 - 2026-11-18 (Claude Code cloud session): GitHub access is limited to this repo; pushing to `main` works. The shared rules are read over the public raw links. No `gh` CLI; GitHub is reached through the session's GitHub tools, which have nothing for turning on Pages. Chromium with Playwright is available for checking the page, including phone-sized screens. https://badbagel47.github.io is reachable for checking the published page.
-- 2026-11-19: The session's network does not reach trythis.one or public DNS lookup services (blocked by the network policy); the container cannot resolve trythis.one names either. Checking cleanup.trythis.one needs that host allowed in the environment's network settings.
+- 2026-11-19: The environment now allows `*.trythis.one`, so cleanup.trythis.one can be checked from the session once its DNS record exists (bare trythis.one, public DNS lookup services and api.cloudflare.com are still blocked). No Cloudflare access in this session: no Cloudflare tool, no saved key, api.cloudflare.com refused (checked 2026-11-19, after the user said Cloudflare DNS had been set up for Claude with another agent).
 - 2026-11-18: The agent's file-writing tools may turn `\uXXXX` escapes into the real characters. Run `python3 tools/escape-nonascii.py js/*.js tests/*.mjs` after editing JavaScript so invisible characters stay readable escapes in the source.
 
 ## Laws and regulations (brief review, 2026-11-18)

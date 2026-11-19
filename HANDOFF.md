@@ -19,7 +19,7 @@ A web page that cleans text from messy input into plain text ("tvätta text"). R
 
 ## Next steps
 
-1. F-011: move the page to cleanup.trythis.one once the user says go (needs a DNS record from the user).
+1. F-011 stopped, waiting for the owner: the secret `CLOUDFLARE_API_TOKEN` is missing in this repo. When it is added, run the workflow "DNS records at Cloudflare" again (it can be started by hand), check that cleanup.trythis.one resolves to GitHub, then add the `CNAME` file (`cleanup.trythis.one`) to the repo root, update the address in HANDOFF.md and README.md, and check the page over HTTP and, once GitHub has the certificate, HTTPS. The owner then ticks "Enforce HTTPS".
 
 ## Publishing
 
@@ -54,7 +54,7 @@ The user asked for "temat med glas". It is the look of the user's own page "Glas
 ## One-time actions
 
 - Done 2026-11-18: GitHub Pages turned on (Deploy from a branch, `main`, root).
-- Done (per the owner, 2026-11-19): the GitHub secret `CLOUDFLARE_API_TOKEN` is available to this repo ("finns redan sedan länge tillbaka"). Not yet seen in use here; the first DNS workflow run confirms it.
+- Pending 2026-11-19 (F-011): add the GitHub secret `CLOUDFLARE_API_TOKEN` to this repo. The owner said it already existed, but the first run of the DNS workflow (2026-11-19 19:24 UTC) found it empty here: it is in the other repos, and GitHub keeps secrets per repo. Nothing was changed at Cloudflare.
 - Proposed 2026-11-19, waiting for the user: let agents turn on "Enforce HTTPS" for GitHub Pages in all the user's repos. Agents have no tool for Pages settings, and as far as known the Actions token cannot change them (the API needs the Administration and Pages permissions; GitHub's docs were not reachable from the session to confirm). Proposal: one fine-grained token (all repos, Pages + Administration read/write) stored as a secret in one central repo, and a scheduled workflow there that turns on "Enforce HTTPS" wherever a custom domain has its certificate. Risk: Administration write is a broad permission (repository settings, including deleting a repository). Where the workflow lives is for the user to decide; it concerns all repos, so it belongs with agent-rules rather than in this repo.
 
 ## Environment notes

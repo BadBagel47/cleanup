@@ -12,11 +12,21 @@ The user's additions during the first run (2026-11-18):
 
 ## Proposed runs
 
-Nothing open.
+Prioritised for: the user's latest wish.
+
+- **A** – strong model, medium level – Own address cleanup.trythis.one
+  - F-011 – Tell GitHub Pages to serve the page on cleanup.trythis.one; once the user has added the DNS record, check the page there and that HTTPS works
 
 ## Open
 
-Nothing open.
+### F-011 – Publish on cleanup.trythis.one
+Priority: High
+The user (2026-11-19): "Vi lägger den på cleanup.trythis.one".
+- Agent: add a `CNAME` file containing `cleanup.trythis.one` to the repo root. With "Deploy from a branch" that is what sets the custom domain for GitHub Pages; https://badbagel47.github.io/cleanup/ then redirects to the new address. Update the publishing section in HANDOFF.md and the link in README.md.
+- User, at the DNS provider of trythis.one: a CNAME record `cleanup` → `badbagel47.github.io`. If the provider is Cloudflare, the record must be "DNS only" (grey cloud), otherwise GitHub cannot issue the certificate. Then tick "Enforce HTTPS" in the repo's Pages settings once GitHub offers it (can take up to about an hour after DNS is in place).
+- Recommended, not required: verify trythis.one for the GitHub account (Settings → Pages → Add a domain, a TXT record), so no other GitHub account can ever take over a subdomain of it.
+- Order: the CNAME file goes in first, then the DNS record (GitHub's recommended order).
+- Checking: the session's network does not reach trythis.one (blocked by the network policy, checked 2026-11-19). The run asks the user to allow cleanup.trythis.one in the environment's network settings, or the user checks the page themselves.
 
 ## Done
 

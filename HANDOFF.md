@@ -52,6 +52,7 @@ The user asked for "temat med glas". It is the look of the user's own page "Glas
 ## One-time actions
 
 - Done 2026-11-18: GitHub Pages turned on (Deploy from a branch, `main`, root).
+- Proposed 2026-11-19, waiting for the user: let agents turn on "Enforce HTTPS" for GitHub Pages in all the user's repos. Agents have no tool for Pages settings, and as far as known the Actions token cannot change them (the API needs the Administration and Pages permissions; GitHub's docs were not reachable from the session to confirm). Proposal: one fine-grained token (all repos, Pages + Administration read/write) stored as a secret in one central repo, and a scheduled workflow there that turns on "Enforce HTTPS" wherever a custom domain has its certificate. Risk: Administration write is a broad permission (repository settings, including deleting a repository). Where the workflow lives is for the user to decide; it concerns all repos, so it belongs with agent-rules rather than in this repo.
 
 ## Environment notes
 

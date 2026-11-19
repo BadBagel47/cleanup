@@ -14,8 +14,9 @@ The user's additions during the first run (2026-11-18):
 
 Prioritised for: the user's latest wish.
 
-- **A** – strong model, medium level – Own address cleanup.trythis.one
-  - F-011 – Tell GitHub Pages to serve the page on cleanup.trythis.one; once the user has added the DNS record, check the page there and that HTTPS works
+- **A** – strong model, medium level – Own address cleanup.trythis.one – waits for the user's answer and one-time action
+  - F-011 – Create the DNS record from a workflow with the owner's Cloudflare token, then point GitHub Pages at cleanup.trythis.one and check the page and HTTPS there
+  - Question (F-011): DNS only (grey cloud) or through Cloudflare (orange cloud)? Recommendation: DNS only. GitHub issues the certificate and it works without extra Cloudflare settings; the Sweden-only rule on trythis.one does not apply to the page, which is fine for a text tool with no server and no data. Through Cloudflare, the Sweden rule would apply, but GitHub cannot issue a certificate and it depends on the zone's SSL setting, which the token is not allowed to change.
 
 ## Open
 
@@ -25,6 +26,8 @@ The user (2026-11-19): "Vi lägger den på cleanup.trythis.one".
 - Agent: add a `CNAME` file containing `cleanup.trythis.one` to the repo root. With "Deploy from a branch" that is what sets the custom domain for GitHub Pages; https://badbagel47.github.io/cleanup/ then redirects to the new address. Update the publishing section in HANDOFF.md and the link in README.md.
 - User, at the DNS provider of trythis.one: a CNAME record `cleanup` → `badbagel47.github.io`. If the provider is Cloudflare, the record must be "DNS only" (grey cloud), otherwise GitHub cannot issue the certificate. Then tick "Enforce HTTPS" in the repo's Pages settings once GitHub offers it (can take up to about an hour after DNS is in place).
 - Recommended, not required: verify trythis.one for the GitHub account (Settings → Pages → Add a domain, a TXT record), so no other GitHub account can ever take over a subdomain of it.
+- How DNS is edited (from network-kit's HANDOFF.md, read 2026-11-19): the owner's Cloudflare token is the GitHub secret `CLOUDFLARE_API_TOKEN`, the same token in every repo that needs it; since 2026-11-19 it may edit DNS records (Zone DNS Edit + Zone Read) on the account's zones, so agents add subdomains of trythis.one from a workflow, with the owner's yes per change. Zone Edit is deliberately not included. trythis.one lets only connections from Sweden through (proxied records); checks from outside use the secret header `x-trythis-country-bypass` (secret `TRYTHIS_COUNTRY_BYPASS`).
+- Plan: a workflow here that creates the record `cleanup` → `badbagel47.github.io` when a small DNS file in the repo changes (create or update only, never delete), run after the owner's yes; then the `CNAME` file. This repo needs the secret `CLOUDFLARE_API_TOKEN` first (one-time action, HANDOFF.md).
 - Order: the moment the `CNAME` file is in, the github.io address redirects to cleanup.trythis.one, so the page is unreachable until the DNS record works. Recommended order: the user adds the DNS record first and says so, then the agent pushes the `CNAME` file right away (the short gap where the record points at GitHub without a site is harmless, and verifying the domain removes even that risk).
 - The agent cannot do the DNS record (outside GitHub) and has no tool for the Pages settings page, so "Enforce HTTPS" may need one click from the user.
 - Checking: the session's network does not reach trythis.one (blocked by the network policy, checked 2026-11-19). The run asks the user to allow cleanup.trythis.one in the environment's network settings, or the user checks the page themselves.

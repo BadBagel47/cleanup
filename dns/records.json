@@ -1,0 +1,12 @@
+{
+  "zone": "trythis.one",
+  "records": [
+    {
+      "type": "CNAME",
+      "name": "cleanup",
+      "content": "badbagel47.github.io",
+      "proxied": false,
+      "comment": "Cleanup on GitHub Pages (BadBagel47/cleanup, F-011)"
+    }
+  ]
+}

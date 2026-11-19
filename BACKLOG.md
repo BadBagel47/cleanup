@@ -16,11 +16,12 @@ Prioritised for: the user's latest wish.
 
 - **A** – strong model, medium level – Own address cleanup.trythis.one – waits for the user's answer
   - F-011 – Create the DNS record from a workflow with the owner's Cloudflare token, then point GitHub Pages at cleanup.trythis.one and check the page and HTTPS there
-  - Question (F-011): DNS only (grey cloud) or through Cloudflare (orange cloud)? Recommendation: DNS only. GitHub issues the certificate and it works without extra Cloudflare settings; the Sweden-only rule on trythis.one does not apply to the page, which is fine for a text tool with no server and no data. Through Cloudflare, the Sweden rule would apply, but GitHub cannot issue a certificate and it depends on the zone's SSL setting, which the token is not allowed to change.
+  - Approved 2026-11-19 with the recommendation ("Kör A rek"): DNS only (grey cloud); the owner's yes covers creating this one DNS record.
 
 ## Open
 
 ### F-011 – Publish on cleanup.trythis.one
+Status: Pågår (2026-11-19, branch claude/wizardly-euler-xwoz5h)
 Priority: High
 The user (2026-11-19): "Vi lägger den på cleanup.trythis.one".
 - Agent: add a `CNAME` file containing `cleanup.trythis.one` to the repo root. With "Deploy from a branch" that is what sets the custom domain for GitHub Pages; https://badbagel47.github.io/cleanup/ then redirects to the new address. Update the publishing section in HANDOFF.md and the link in README.md.

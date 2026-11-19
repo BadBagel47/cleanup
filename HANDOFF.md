@@ -14,6 +14,7 @@ A web page that cleans text from messy input into plain text ("tvätta text"). R
 - 2026-11-18: First version built and on `main` (F-001 to F-005, F-007): 40 cleaning rules with a setting each, before/after view with line numbers, change log, selection marks with character details, glass theme, remembered settings.
 - 2026-11-18: Verified with the tests (`npm test`) and in Chromium on desktop size, phone size (iPhone 13 emulation, touch) and with keyboard only. Not tried on a real phone, and not in Safari or Firefox.
 - 2026-11-18: Published on GitHub Pages: https://badbagel47.github.io/cleanup/ (F-006), checked in Chromium at desktop and phone size.
+- 2026-11-19: The page moves to cleanup.trythis.one (the owner: "Vi lägger den på cleanup.trythis.one"). The DNS record is DNS only (grey cloud), pointing straight at GitHub Pages, so GitHub issues the certificate; the Sweden-only rule on trythis.one does not apply to this page, which the owner accepted (F-011, "Kör A rek").
 - 2026-11-18: Emoji are kept by default (F-009), and the five rules that are off by default have their own group last in the settings (D-010). Published and checked.
 
 ## Next steps
@@ -46,6 +47,7 @@ The user asked for "temat med glas". It is the look of the user's own page "Glas
 - 2026-11-18: Fonts are served from the repo, not from Google Fonts. The background scenes from the example page are not used (unknown licence).
 - 2026-11-18: All cleaning rules are on by default (the user: "Aktivera alla rensningsval som standard"), except four that delete real letters or the paragraph structure: everything outside basic ASCII, accents, remove all empty lines, join broken lines. The user confirmed these stay off (D-008).
 - 2026-11-18: The rules that are off by default get their own group last in the settings, "Stronger clean-up (off by default)", Emoji included (D-010, approved with the recommendation).
+- 2026-11-19: The page moves to cleanup.trythis.one (the owner: "Vi lägger den på cleanup.trythis.one"). The DNS record is DNS only (grey cloud), pointing straight at GitHub Pages, so GitHub issues the certificate; the Sweden-only rule on trythis.one does not apply to this page, which the owner accepted (F-011, "Kör A rek").
 - 2026-11-18: Emoji are kept by default (the user: "Tillåt emojis som default"); the Emoji rule becomes off by default with F-009.
 - 2026-11-18: The user asked for settings for double spaces, spaces between the last character and the line break, and spaces before punctuation ("detta är en mening !"). All three are separate rules.
 

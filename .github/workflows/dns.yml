@@ -1,0 +1,40 @@
+name: DNS records at Cloudflare
+
+# Creates the records listed in dns/records.json (never changes or removes
+# existing ones). Every change to that file needs the owner's yes first.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dns/records.json'
+      - 'tools/cloudflare-dns.py'
+      - '.github/workflows/dns.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-dns
+  cancel-in-progress: false
+
+jobs:
+  records:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create missing records
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          echo "## DNS records" >> "$GITHUB_STEP_SUMMARY"
+          python3 tools/cloudflare-dns.py
+      - name: Show what the world sees
+        run: |
+          sleep 20
+          for name in $(python3 -c "import json; d=json.load(open('dns/records.json')); print(' '.join(r['name']+'.'+d['zone'] for r in d['records']))"); do
+            echo "### $name" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            dig +short "$name" @1.1.1.1 | tee -a "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          done
